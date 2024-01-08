@@ -9,9 +9,6 @@ package-lock.json
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
 
 # production
 /build
@@ -26,5 +23,3 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 
-# Sentry Auth Token
-.sentryclirc
