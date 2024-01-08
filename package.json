@@ -2,7 +2,7 @@
   "name": "uploader",
   "version": "1.0.0",
   "description": "Uploader created in Vanilla Javascript to upload files directly to our servers.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
