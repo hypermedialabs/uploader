@@ -55,8 +55,9 @@ sequenceDiagram
 Client Uploader ->> Hypermedia Gateway: HEAD /hypermedia-gateway-endpoint
 Note left of Client Uploader: This is the request <br/> to get the upload <br/> information
 Hypermedia Gateway->>Client Uploader: Headers: access-control-allow-origin: <br/> hypermedia-gateway.domain.com
+Note right of Hypermedia Gateway: Gateway allows the request <br/> because we need to set up <br/> a .env file <br/> into the project with the <br/> ALLOWED_DOMAINS variable <br/> with hypermedia-gateway.domain.com <br/> as a value.
 Note left of Client Uploader: Browser verifies <br/> we are hypermedia-gateway.domain.com <br/> and allows the request
-Hypermedia Gateway ->> Hypermedia API: Get upload information using your <br/> HYPERMEDIA_API_KEY and your <br/> ALLOWED_DOMAINS variables <br/> into your .env file in your <br/> Hypermedia Gateway project
+Hypermedia Gateway ->> Hypermedia API: Get upload information using your <br/> HYPERMEDIA_API_KEY into your .env file in your <br/> Hypermedia Gateway project
 Hypermedia API ->> Hypermedia Gateway: Returns the upload information
 Hypermedia Gateway ->> Client Uploader: Returns the upload information
 ```
