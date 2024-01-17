@@ -58,4 +58,4 @@ All contributors are expected to adhere to the project's Code of Conduct. Please
 
 ## License
 
-Hypermedia Uploader is MIT licensed.
+Hypermedia Client Uploader is MIT licensed.
