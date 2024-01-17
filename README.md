@@ -15,7 +15,13 @@ Client Uploader is a robust and flexible TypeScript library for handling media f
 Install Client Uploader via npm:
 
 ```bash
-npm install hypermedia-uploader
+npm install @hypermedialabs/uploader
+```
+
+or
+
+```bash
+yarn add @hypermedialabs/uploader
 ```
 
 ## Usage
@@ -23,7 +29,7 @@ npm install hypermedia-uploader
 First, import the **useHypermediaUploader** function:
 
 ```typescript
-import { useHypermediaUploader } from 'hypermedia-uploader';
+import { useHypermediaUploader } from '@hypermedialabs/uploader';
 ```
 
 Then, implement the uploader in your application:
