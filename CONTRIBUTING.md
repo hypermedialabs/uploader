@@ -1,10 +1,10 @@
-# Contributing to Hypermedia Uploader
+# Contributing to Client Uploader
 
-We're thrilled that you're interested in contributing to Hypermedia Uploader! Your contributions are essential for keeping this project innovative and accessible. Whether you're fixing bugs, adding new features, or improving documentation, every contribution is valuable.
+We're thrilled that you're interested in contributing to Client Uploader! Your contributions are essential for keeping this project innovative and accessible. Whether you're fixing bugs, adding new features, or improving documentation, every contribution is valuable.
 
 ## How to Contribute
 
-1. **Fork the Repository**: Start by forking the Hypermedia Uploader repository on GitHub.
+1. **Fork the Repository**: Start by forking the Client Uploader repository on GitHub.
 
 2. **Clone the Forked Repository**: Clone your fork to your local machine to start making changes.
 
@@ -16,13 +16,13 @@ We're thrilled that you're interested in contributing to Hypermedia Uploader! Yo
 
 6. **Write Tests**: If you're adding new functionality, please write tests to accompany your changes. This ensures that your feature works as expected and prevents future changes from breaking your work.
 
-7. **Follow Coding Standards**: Make sure your code adheres to the coding standards used in Hypermedia Uploader. This typically means following stylistic guidelines and using tools like ESLint and Prettier.
+7. **Follow Coding Standards**: Make sure your code adheres to the coding standards used in Client Uploader. This typically means following stylistic guidelines and using tools like ESLint and Prettier.
 
 8. **Commit Your Changes**: Use clear and concise commit messages, describing what you've changed and why.
 
 9. **Push to Your Branch**: Push your changes to your fork on GitHub.
 
-10. **Create a Pull Request (PR)**: Open a PR from your fork to the main Hypermedia Uploader repository. Fill out the PR template, clearly describing the changes you've made.
+10. **Create a Pull Request (PR)**: Open a PR from your fork to the main Client Uploader repository. Fill out the PR template, clearly describing the changes you've made.
 
 ## Reporting Bugs
 
@@ -35,7 +35,7 @@ We're thrilled that you're interested in contributing to Hypermedia Uploader! Yo
 We welcome enhancement requests. Please:
 
 - Use the GitHub Issues page to suggest enhancements.
-- Explain why this enhancement would be useful to most Hypermedia Uploader users.
+- Explain why this enhancement would be useful to most Client Uploader users.
 - Provide as much detail and context as possible.
 
 ## Code of Conduct
@@ -44,7 +44,7 @@ All contributors are expected to adhere to the project's Code of Conduct. Please
 
 ## Thank You
 
-Thank you for contributing to Hypermedia Uploader! Your effort and involvement are what make this project great.
+Thank you for contributing to Client Uploader! Your effort and involvement are what make this project great.
 
 ## Questions?
 

@@ -1,6 +1,6 @@
-# Hypermedia Client Uploader
+# Client Uploader
 
-Hypermedia Client Uploader is a robust and flexible TypeScript library for handling media file uploads in web applications. Integrating Uppy and tus-js-client, this library simplifies the process of uploading files to your server and provides extensive customization and callback options.
+Client Uploader is a robust and flexible TypeScript library for handling media file uploads in web applications. Integrating Uppy and tus-js-client, this library simplifies the process of uploading files to your server and provides extensive customization and callback options.
 
 ## Features
 
@@ -12,7 +12,7 @@ Hypermedia Client Uploader is a robust and flexible TypeScript library for handl
 
 ## Installation
 
-Install Hypermedia Uploader via npm:
+Install Client Uploader via npm:
 
 ```bash
 npm install hypermedia-uploader
@@ -50,7 +50,7 @@ const uploader = useHypermediaUploader(endpoint, {
 
 ## Contributing
 
-Contributions to Hypermedia Uploader are welcome! Please read [Contributing](CONTRIBUTING.md) for details.
+Contributions to Client Uploader are welcome! Please read [Contributing](CONTRIBUTING.md) for details.
 
 ## Code of Conduct
 
@@ -58,4 +58,4 @@ All contributors are expected to adhere to the project's Code of Conduct. Please
 
 ## License
 
-Hypermedia Client Uploader is MIT licensed.
+Client Uploader is MIT licensed.
