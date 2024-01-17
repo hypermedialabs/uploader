@@ -50,7 +50,7 @@ const uploader = useHypermediaUploader(endpoint, {
 
 ## Contributing
 
-Contributions to Hypermedia Uploader are welcome! Please read [Contributing to Hypermedia Client Uploader](CONTRIBUTING.md) for details.
+Contributions to Hypermedia Uploader are welcome! Please read [Contributing](CONTRIBUTING.md) for details.
 
 ## Code of Conduct
 
