@@ -42,11 +42,24 @@ const uploader = useHypermediaUploader(endpoint, {
 
 **useHypermediaUploader(endpoint, options)**
 
-- **endpoint**: string - The server endpoint for file uploads.
+- **endpoint**: string - The server endpoint to get upload information. This upload information is **REQUIRED** to upload your video into our servers. We recommend strongly use the [Hypermedia Gateway](https://github.io) to make sure your information is secure from CSRF attacks but you can use any server you want to make the request to our [API](https://api.hypermedia.link/docs) and get the upload information anyway.
 - **options**: Object - Configuration options for the uploader.
   - **onError**: function - Callback for upload errors.
   - **onProgress**: function - Callback for tracking upload progress.
   - **onSuccess**: function - Callback for successful uploads.
+
+### How is Hypermedia Gateway's working?
+
+```mermaid
+sequenceDiagram
+Client Uploader ->> Hypermedia Gateway: HEAD /hypermedia-gateway-endpoint
+Note left of Client Uploader: This is the request <br/> to get the upload <br/> information
+Hypermedia Gateway->>Client Uploader: Headers: access-control-allow-origin: <br/> hypermedia-gateway.domain.com
+Note left of Client Uploader: Browser verifies <br/> we are hypermedia-gateway.domain.com <br/> and allows the request
+Hypermedia Gateway ->> Hypermedia API: Get upload information using your <br/> HYPERMEDIA_API_KEY and your <br/> ALLOWED_DOMAINS variables <br/> into your .env file in your <br/> Hypermedia Gateway project
+Hypermedia API ->> Hypermedia Gateway: Returns the upload information
+Hypermedia Gateway ->> Client Uploader: Returns the upload information
+```
 
 ## Contributing
 
