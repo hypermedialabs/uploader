@@ -1,105 +1,86 @@
 import Uppy from '@uppy/core';
 import { Upload } from 'tus-js-client';
-import { apiRequest } from './apiRequest';
-import { removeTrailingSlash } from './utils';
+import { apiRequest, removeTrailingSlash } from './utils';
 
 /**
- * Hook to use the hypermedia uploader.
- *
- * @param endpoint - The endpoint URL for the upload.
- * @param options - Options including callbacks for upload events.
- * @returns An instance of the Uppy uploader.
+ * Class representing a hypermedia uploader using Uppy and tus-js-client.
  */
-export const useHypermediaUploader = (endpoint, options) => {
-  const {
-    onError,
-    onProgress,
-    onSuccess,
-    autoProceed = true,
-    allowMultipleUploadBatches = true,
-    debug,
-    maxFileSize,
-    minFileSize,
-    maxTotalFileSize,
-    minNumberOfFiles = 1,
-    maxNumberOfFiles = 1,
-  } = options;
+class HypermediaUploader {
+  /**
+   * Create a HypermediaUploader.
+   * @param {string} endpoint - The endpoint URL for the upload.
+   * @param {Object} options - Options for the uploader.
+   * @param {Function} options.onError - Callback for error events.
+   * @param {Function} options.onProgress - Callback for progress events.
+   * @param {Function} options.onSuccess - Callback for success events.
+   * @param {boolean} [options.autoProceed=true] - Auto proceed uploads.
+   * @param {boolean} [options.allowMultipleUploadBatches=true] - Allow multiple upload batches.
+   * @param {boolean} [options.debug=false] - Enable debug mode.
+   * @param {number} [options.maxFileSize] - Maximum file size.
+   * @param {number} [options.minFileSize] - Minimum file size.
+   * @param {number} [options.maxTotalFileSize] - Maximum total file size.
+   * @param {number} [options.minNumberOfFiles=1] - Minimum number of files.
+   * @param {number} [options.maxNumberOfFiles=1] - Maximum number of files.
+   */
+  constructor(endpoint, options) {
+    this.endpoint = endpoint;
+    this.options = options;
 
-  const uploader = new Uppy({
-    autoProceed, // set to false to let the user start the upload
-    allowMultipleUploadBatches, // set to true to allow multiple upload batches per URL
-    debug, // set to true to show debug messages (recommended in development)
-    restrictions: {
-      maxFileSize, // or specify a size limit
-      minFileSize, // or specify a minimum size
-      maxTotalFileSize, // or specify a total size limit
-      maxNumberOfFiles,
-      minNumberOfFiles,
-      allowedFileTypes: ['video/*'],
-    },
-    infoTimeout: 10000,
-  });
-
-  uploader.on('file-added', async (file) => {
-    const parsedEndpoint = await removeTrailingSlash(endpoint);
-    const uploadInformation = await apiRequest(
-      `${parsedEndpoint}/api/upload-information`,
-      'POST',
-      {
-        title: file.name,
-        size: file.size,
+    this.uploader = new Uppy({
+      autoProceed: options.autoProceed,
+      allowMultipleUploadBatches: options.allowMultipleUploadBatches,
+      debug: options.debug,
+      restrictions: {
+        maxFileSize: options.maxFileSize,
+        minFileSize: options.minFileSize,
+        maxTotalFileSize: options.maxTotalFileSize,
+        maxNumberOfFiles: options.maxNumberOfFiles,
+        minNumberOfFiles: options.minNumberOfFiles,
+        allowedFileTypes: ['video/*'],
       },
-    );
+      infoTimeout: 10000,
+    });
 
+    this.setUpUploaderEvents();
+  }
+
+  /**
+   * Set up events for the uploader.
+   * @private
+   */
+  async setUpUploaderEvents() {
+    this.uploader.on('file-added', async (file) => {
+      const parsedEndpoint = await removeTrailingSlash(this.endpoint);
+      const uploadInformation = await apiRequest(
+        `${parsedEndpoint}/api/upload-information`,
+        'POST',
+        {
+          title: file.name,
+          size: file.size,
+        },
+      );
+
+      await this.handleUploadInformation(
+        file,
+        uploadInformation,
+        parsedEndpoint,
+      );
+    });
+  }
+
+  /**
+   * Handles the upload information received from the server.
+   * @param {Object} file - The file object to be uploaded.
+   * @param {Response} uploadInformation - The upload information response from the server.
+   * @param {string} parsedEndpoint - The parsed endpoint URL.
+   * @private
+   */
+  async handleUploadInformation(file, uploadInformation, parsedEndpoint) {
     if (uploadInformation.ok) {
       const information = await uploadInformation.json();
-
       if (information.success) {
         const { data } = information;
-
-        const upload = new Upload(file.data, {
-          endpoint: data.endpoint,
-          retryDelays: [0, 3000, 5000, 10000],
-          removeFingerprintOnSuccess: true,
-          chunkSize: 3 * 1024 * 1024,
-          headers: data.headers,
-          metadata: {
-            filetype: file.data.type,
-            collection: data.metadata.collection,
-            title: file.name,
-            size: file.size,
-          },
-          onError: (error) => {
-            console.error(error);
-
-            if (onError) {
-              onError(error);
-            }
-          },
-          onProgress: (bytesUploaded, bytesTotal) => {
-            const progress = (bytesUploaded / bytesTotal) * 100;
-            if (onProgress) {
-              onProgress(progress, bytesUploaded, bytesTotal);
-            }
-          },
-          onSuccess: async () => {
-            if (onSuccess) {
-              onSuccess(upload);
-            }
-
-            await apiRequest(`${parsedEndpoint}/api/upload-completed`, 'POST', {
-              tus_file: upload,
-            });
-          },
-        });
-
-        upload.findPreviousUploads().then((previousUploads) => {
-          if (previousUploads.length) {
-            upload.resumeFromPreviousUpload(previousUploads[0]);
-          }
-
-          upload.start();
-        });
+        this.startUpload(file, data, parsedEndpoint);
       } else {
         console.error('ERROR:', information);
         throw new Error('Something went wrong before start uploading');
@@ -108,7 +89,57 @@ export const useHypermediaUploader = (endpoint, options) => {
       console.error('ERROR:', uploadInformation);
       throw new Error('Something went wrong getting upload information');
     }
-  });
+  }
 
-  return uploader;
-};
+  /**
+   * Starts the upload process for a file.
+   * @param {Object} file - The file object to be uploaded.
+   * @param {Object} data - The data object containing the endpoint and headers for the upload.
+   * @param {string} parsedEndpoint - The parsed endpoint URL.
+   * @private
+   */
+  startUpload(file, data, parsedEndpoint) {
+    const upload = new Upload(file.data, {
+      endpoint: data.endpoint,
+      retryDelays: [0, 3000, 5000, 10000],
+      removeFingerprintOnSuccess: true,
+      chunkSize: 3 * 1024 * 1024,
+      headers: data.headers,
+      metadata: {
+        filetype: file.data.type,
+        collection: data.metadata.collection,
+        title: file.name,
+        size: file.size,
+      },
+      onError: (error) => {
+        console.error(error);
+        if (this.options.onError) {
+          this.options.onError(error);
+        }
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const progress = (bytesUploaded / bytesTotal) * 100;
+        if (this.options.onProgress) {
+          this.options.onProgress(progress, bytesUploaded, bytesTotal);
+        }
+      },
+      onSuccess: async () => {
+        if (this.options.onSuccess) {
+          this.options.onSuccess(upload);
+        }
+        await apiRequest(`${parsedEndpoint}/api/upload-completed`, 'POST', {
+          tus_file: upload,
+        });
+      },
+    });
+
+    upload.findPreviousUploads().then((previousUploads) => {
+      if (previousUploads.length) {
+        upload.resumeFromPreviousUpload(previousUploads[0]);
+      }
+      upload.start();
+    });
+  }
+}
+
+export default HypermediaUploader;
