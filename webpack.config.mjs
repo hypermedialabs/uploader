@@ -5,20 +5,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  entry: './src/index.ts', // Asegúrate de cambiar esto a tu punto de entrada principal
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'], // Webpack ahora resuelve estos tipos de archivos
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules\/(?!(hypermedialabs\/uploader)\/).*/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.js$/,
@@ -29,15 +29,15 @@ export default {
       },
     ],
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       commons: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: 'vendors',
+  //         chunks: 'all',
+  //       },
+  //     },
+  //   },
+  // },
 };
