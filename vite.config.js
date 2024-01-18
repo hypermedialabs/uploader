@@ -1,6 +1,11 @@
-// vite.config.js
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Tus configuraciones específicas van aquí
+  build: {
+    lib: {
+      entry: 'src/index.js',
+      name: '@hypermedialabs/uploader',
+      fileName: (format) => `uploader.${format}.js`,
+    },
+  },
 });
