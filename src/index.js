@@ -41,7 +41,7 @@ export const useHypermediaUploader = (endpoint, options) => {
   });
 
   uploader.on('file-added', async (file) => {
-    const parsedEndpoint = removeTrailingSlash(endpoint);
+    const parsedEndpoint = await removeTrailingSlash(endpoint);
     const uploadInformation = await apiRequest(
       `${parsedEndpoint}/api/upload-information`,
       'POST',
