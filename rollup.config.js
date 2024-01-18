@@ -11,7 +11,7 @@ const config = {
   },
   plugins: [
     resolve({
-      preferBuiltins: true
+      preferBuiltins: false,
     }),
     commonjs(),
     babel({ babelHelpers: 'bundled' }),
