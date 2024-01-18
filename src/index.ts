@@ -87,7 +87,8 @@ export const useHypermediaUploader = (
           },
         });
 
-        upload.findPreviousUploads().then((previousUploads: tus.Upload) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        upload.findPreviousUploads().then((previousUploads: any) => {
           if (previousUploads.length) {
             upload.resumeFromPreviousUpload(previousUploads[0]);
           }
