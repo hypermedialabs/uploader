@@ -1,15 +1,15 @@
 {
   "name": "@hypermedialabs/uploader",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "Client Uploader is a powerful, flexible TypeScript library designed to streamline the process of uploading videos to your hypermedia account.",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix && prettier --write .",
-    "dev": "vite", 
-  "build": "vite build",
-  "preview": "vite preview"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "TypeScript",
