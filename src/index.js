@@ -61,8 +61,9 @@ export const useHypermediaUploader = (endpoint, options) => {
           headers: data.headers,
           metadata: {
             filetype: file.data.type,
-            collection: data.collection,
+            collection: data.metadata.collection,
             title: file.name,
+            size: file.size,
           },
           onError: (error) => {
             console.error(error);
