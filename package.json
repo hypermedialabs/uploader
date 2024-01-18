@@ -5,9 +5,11 @@
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint . --fix && prettier --write ."
+    "lint": "eslint . --fix && prettier --write .",
+    "dev": "vite", 
+  "build": "vite build",
+  "preview": "vite preview"
   },
   "keywords": [
     "TypeScript",
@@ -76,7 +78,8 @@
     "https": "^1.0.0",
     "husky": "^8.0.3",
     "prettier": "^3.2.4",
-    "rollup": "^4.9.5"
+    "rollup": "^4.9.5",
+    "vite": "^5.0.11"
   },
   "dependencies": {
     "@uppy/core": "^3.8.0",
