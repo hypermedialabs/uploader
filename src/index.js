@@ -1,6 +1,7 @@
 import Uppy from '@uppy/core';
 import { Upload } from 'tus-js-client';
 import { apiRequest } from './apiRequest';
+import { removeTrailingSlash } from './utils';
 
 /**
  * Hook to use the hypermedia uploader.
@@ -40,11 +41,15 @@ export const useHypermediaUploader = (endpoint, options) => {
   });
 
   uploader.on('file-added', async (file) => {
-    // Get the upload information from the Hypermedia Server Uploader.
-    const uploadInformation = await apiRequest(endpoint, 'POST', {
-      title: file.name,
-      size: file.size,
-    });
+    const parsedEndpoint = removeTrailingSlash(endpoint);
+    const uploadInformation = await apiRequest(
+      `${parsedEndpoint}/api/upload-information`,
+      'POST',
+      {
+        title: file.name,
+        size: file.size,
+      },
+    );
 
     if (uploadInformation.ok) {
       const information = await uploadInformation.json();
@@ -52,7 +57,6 @@ export const useHypermediaUploader = (endpoint, options) => {
       if (information.success) {
         const { data } = information;
 
-        // Create a new tus upload.
         const upload = new Upload(file.data, {
           endpoint: data.endpoint,
           retryDelays: [0, 3000, 5000, 10000],
@@ -78,10 +82,14 @@ export const useHypermediaUploader = (endpoint, options) => {
               onProgress(progress, bytesUploaded, bytesTotal);
             }
           },
-          onSuccess: () => {
+          onSuccess: async () => {
             if (onSuccess) {
               onSuccess(upload);
             }
+
+            await apiRequest(`${parsedEndpoint}/api/upload-completed`, 'POST', {
+              tus_file: upload,
+            });
           },
         });
 
