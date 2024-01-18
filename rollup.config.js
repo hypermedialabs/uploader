@@ -8,8 +8,15 @@ export default {
   output: {
     file: 'dist/bundle.js',
     format: 'umd',
-    name: 'MyLibrary',
+    name: '@hypermedialabs/uploader',
     sourcemap: true,
   },
-  plugins: [resolve(), commonjs(), typescript(), terser()],
+  plugins: [
+    resolve(),
+    commonjs(),
+    typescript({
+      include: ['src/**/*.ts', 'node_modules/tus-js-client/**/*.ts'],
+    }),
+    terser(),
+  ],
 };
