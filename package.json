@@ -80,7 +80,7 @@
   },
   "dependencies": {
     "@uppy/core": "^3.8.0",
-    "@uppy/tus": "^3.5.0"
+    "tus-js-client": "^4.0.1"
   },
   "type": "module"
 }
