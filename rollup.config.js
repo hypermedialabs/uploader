@@ -10,7 +10,9 @@ const config = {
     format: 'esm',
   },
   plugins: [
-    resolve(),
+    resolve({
+      preferBuiltins: true
+    }),
     commonjs(),
     babel({ babelHelpers: 'bundled' }),
     terser(),
