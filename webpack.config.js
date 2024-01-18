@@ -10,25 +10,24 @@ export default {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'], // Webpack ahora resuelve estos tipos de archivos
+  },
   module: {
     rules: [
       {
-        test: /\.tsx?$/, // Para archivos TypeScript
+        test: /\.tsx?$/, // Una regla para archivos TypeScript
         use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
-        test: /\.js$/, // Para archivos JavaScript
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
         },
       },
-      // ... otras reglas
     ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
   },
   optimization: {
     splitChunks: {
@@ -41,5 +40,4 @@ export default {
       },
     },
   },
-  // ... otras configuraciones
 };

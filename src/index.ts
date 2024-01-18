@@ -1,5 +1,5 @@
 import Uppy, { UppyFile } from '@uppy/core';
-import { Upload } from 'tus-js-client';
+import * as tus from 'tus-js-client';
 import { apiRequest } from './apiRequest';
 
 /**
@@ -56,7 +56,7 @@ export const useHypermediaUploader = (
         const { data } = information;
 
         // Create a new tus upload.
-        const tus = new Upload(file.data, {
+        const upload = new tus.Upload(file.data, {
           endpoint: data.endpoint,
           retryDelays: [0, 3000, 5000, 10000],
           removeFingerprintOnSuccess: true,
@@ -82,17 +82,17 @@ export const useHypermediaUploader = (
           },
           onSuccess: () => {
             if (onSuccess) {
-              onSuccess(tus);
+              onSuccess(upload);
             }
           },
         });
 
-        tus.findPreviousUploads().then((previousUploads) => {
+        upload.findPreviousUploads().then((previousUploads: tus.Upload) => {
           if (previousUploads.length) {
-            tus.resumeFromPreviousUpload(previousUploads[0]);
+            upload.resumeFromPreviousUpload(previousUploads[0]);
           }
 
-          tus.start();
+          upload.start();
         });
       } else {
         console.error('ERROR:', information);
@@ -123,5 +123,5 @@ interface HypermediaUploaderOptions {
     bytesUploaded: number,
     bytesTotal: number,
   ) => void;
-  onSuccess?: (upload: Upload) => void;
+  onSuccess?: (upload: tus.Upload) => void;
 }

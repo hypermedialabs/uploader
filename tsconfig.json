@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "module": "commonjs",
-    "target": "es6",
-    "strict": true,
+    "target": "es5", // Puedes elegir el nivel de ECMAScript para el código de salida
+    "module": "es6", // Sistema de módulos
+    "strict": true, // Habilita todas las opciones estrictas
+    "jsx": "react", // Solo si estás usando React
     "esModuleInterop": true,
-    "types": ["node"]
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*"], // Los archivos que TypeScript debe procesar
+  "exclude": ["node_modules"] // Excluir la carpeta node_modules
 }
