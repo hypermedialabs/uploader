@@ -5,6 +5,7 @@
     "target": "es6",
     "strict": true,
     "esModuleInterop": true,
+    "types": ["node"]
   },
   "include": ["src/**/*"],
 }

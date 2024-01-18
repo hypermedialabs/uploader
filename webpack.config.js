@@ -1,6 +1,6 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
+export default {
   entry: './src/index.ts', // Asegúrate de cambiar esto a tu punto de entrada principal
   output: {
     path: path.resolve(__dirname, 'dist'),
