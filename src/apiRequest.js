@@ -7,12 +7,7 @@
  * @param headers - Additional headers for the request.
  * @returns The response from the API as a Promise.
  */
-export async function apiRequest(
-  url: string,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-  body?: Record<string, unknown>,
-  headers?: Record<string, string>,
-): Promise<Response> {
+export async function apiRequest(url, method, body, headers) {
   return fetch(url, {
     method: method,
     headers: {

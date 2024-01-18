@@ -1,5 +1,5 @@
-import Uppy, { UppyFile } from '@uppy/core';
-import * as tus from 'tus-js-client';
+import Uppy from '@uppy/core';
+import { Upload } from 'tus-js-client';
 import { apiRequest } from './apiRequest';
 
 /**
@@ -9,10 +9,7 @@ import { apiRequest } from './apiRequest';
  * @param options - Options including callbacks for upload events.
  * @returns An instance of the Uppy uploader.
  */
-export const useHypermediaUploader = (
-  endpoint: string,
-  options: HypermediaUploaderOptions,
-): Uppy => {
+export const useHypermediaUploader = (endpoint, options) => {
   const {
     onError,
     onProgress,
@@ -42,7 +39,7 @@ export const useHypermediaUploader = (
     infoTimeout: 10000,
   });
 
-  uploader.on('file-added', async (file: UppyFile) => {
+  uploader.on('file-added', async (file) => {
     // Get the upload information from the Hypermedia Server Uploader.
     const uploadInformation = await apiRequest(endpoint, 'POST', {
       title: file.name,
@@ -56,7 +53,7 @@ export const useHypermediaUploader = (
         const { data } = information;
 
         // Create a new tus upload.
-        const upload = new tus.Upload(file.data, {
+        const upload = new Upload(file.data, {
           endpoint: data.endpoint,
           retryDelays: [0, 3000, 5000, 10000],
           removeFingerprintOnSuccess: true,
@@ -67,14 +64,14 @@ export const useHypermediaUploader = (
             collection: data.collection,
             title: file.name,
           },
-          onError: (error: Error) => {
+          onError: (error) => {
             console.error(error);
 
             if (onError) {
               onError(error);
             }
           },
-          onProgress: (bytesUploaded: number, bytesTotal: number) => {
+          onProgress: (bytesUploaded, bytesTotal) => {
             const progress = (bytesUploaded / bytesTotal) * 100;
             if (onProgress) {
               onProgress(progress, bytesUploaded, bytesTotal);
@@ -87,8 +84,7 @@ export const useHypermediaUploader = (
           },
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        upload.findPreviousUploads().then((previousUploads: any) => {
+        upload.findPreviousUploads().then((previousUploads) => {
           if (previousUploads.length) {
             upload.resumeFromPreviousUpload(previousUploads[0]);
           }
@@ -107,22 +103,3 @@ export const useHypermediaUploader = (
 
   return uploader;
 };
-
-interface HypermediaUploaderOptions {
-  maxFileSize?: number;
-  minFileSize?: number;
-  maxTotalFileSize?: number;
-  maxNumberOfFiles?: number;
-  minNumberOfFiles?: number;
-  allowedFileTypes?: string[];
-  allowMultipleUploadBatches?: boolean;
-  autoProceed?: boolean;
-  debug?: boolean;
-  onError?: (error: Error) => void;
-  onProgress?: (
-    progress: number,
-    bytesUploaded: number,
-    bytesTotal: number,
-  ) => void;
-  onSuccess?: (upload: tus.Upload) => void;
-}
