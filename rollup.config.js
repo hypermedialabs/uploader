@@ -1,22 +1,15 @@
-import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   output: {
     file: 'dist/bundle.js',
-    format: 'umd', // bundle format (amd, cjs, es, umd)
-    name: '@hypermedialabs/uploader',
+    format: 'umd',
+    name: 'MyLibrary',
+    sourcemap: true,
   },
-  plugins: [
-    resolve(),
-    commonjs(),
-    babel({
-      exclude: 'node_modules/**',
-      babelHelpers: 'bundled',
-    }),
-    terser(),
-  ],
+  plugins: [resolve(), commonjs(), typescript(), terser()],
 };

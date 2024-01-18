@@ -4,6 +4,7 @@
   "description": "Client Uploader is a powerful, flexible TypeScript library designed to streamline the process of uploading videos to your hypermedia account.",
   "main": "src/index.ts",
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix && prettier --write ."
   },
@@ -66,6 +67,7 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
@@ -75,7 +77,8 @@
     "husky": "^8.0.3",
     "prettier": "^3.2.4",
     "rollup": "^2.79.1",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@uppy/core": "^3.8.0",
