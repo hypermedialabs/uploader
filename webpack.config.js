@@ -16,9 +16,9 @@ export default {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, // Una regla para archivos TypeScript
-        use: 'ts-loader',
-        exclude: /node_modules/,
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules\/(?!(hypermedialabs\/uploader)\/).*/,
       },
       {
         test: /\.js$/,
