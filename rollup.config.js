@@ -1,18 +1,19 @@
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import css from 'rollup-plugin-css-only';
+import terser from '@rollup/plugin-terser';
 
 const config = {
   input: 'src/index.js',
   output: {
     dir: 'dist',
+    format: 'esm',
   },
   plugins: [
     resolve(),
     commonjs(),
     babel({ babelHelpers: 'bundled' }),
-    css({ output: 'bundle.css' }),
+    terser(),
   ],
 };
 
