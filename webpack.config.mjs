@@ -1,10 +1,14 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default {
   entry: './src/index.ts', // Asegúrate de cambiar esto a tu punto de entrada principal
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
@@ -28,7 +32,13 @@ export default {
   },
   optimization: {
     splitChunks: {
-      chunks: 'all', // Puedes ajustar esto según tus necesidades
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
     },
   },
   // ... otras configuraciones
