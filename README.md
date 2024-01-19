@@ -1,4 +1,6 @@
-# Client Uploader
+# <center> Client Uploader</center>
+
+![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hypermedialabs)
 
 Client Uploader is a robust and flexible TypeScript library for handling media file uploads in web applications. Integrating Uppy and tus-js-client, this library simplifies the process of uploading files to your server and provides extensive customization and callback options.
 
