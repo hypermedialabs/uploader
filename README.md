@@ -41,7 +41,7 @@ const uploader = new HypermediaUploader(endpoint, options);
 
 ## API Reference
 
-**useHypermediaUploader(endpoint, options)**
+**HypermediaUploader(endpoint, options)**
 
 - **endpoint**: string - The server endpoint to get upload information. This upload information is **REQUIRED** to upload your video into our servers. We recommend strongly use the [Hypermedia Gateway](https://github.com/hypermedialabs/gateway) to make sure your information is secure from CSRF attacks but you can use any server you want to make the request to our [API](https://api.hypermedia.link/docs) and get the upload information anyway.
 - **options**: Object - Configuration options for the uploader.
