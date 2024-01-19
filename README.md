@@ -25,7 +25,7 @@ yarn add @hypermedialabs/uploader
 
 ## Usage
 
-First, import the **useHypermediaUploader** function:
+First, import the **HypermediaUploader** function:
 
 ```javascript
 import HypermediaUploader from '@hypermedialabs/uploader';
