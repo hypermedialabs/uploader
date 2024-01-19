@@ -19,8 +19,6 @@ class HypermediaUploader {
    * @param {number} [options.maxFileSize] - Maximum file size.
    * @param {number} [options.minFileSize] - Minimum file size.
    * @param {number} [options.maxTotalFileSize] - Maximum total file size.
-   * @param {number} [options.minNumberOfFiles=1] - Minimum number of files.
-   * @param {number} [options.maxNumberOfFiles=1] - Maximum number of files.
    */
   constructor(endpoint, options) {
     this.endpoint = endpoint;
@@ -28,14 +26,14 @@ class HypermediaUploader {
 
     this.uploader = new Uppy({
       autoProceed: options.autoProceed,
-      allowMultipleUploadBatches: options.allowMultipleUploadBatches,
+      allowMultipleUploadBatches: false,
       debug: options.debug,
       restrictions: {
         maxFileSize: options.maxFileSize,
         minFileSize: options.minFileSize,
         maxTotalFileSize: options.maxTotalFileSize,
-        maxNumberOfFiles: options.maxNumberOfFiles,
-        minNumberOfFiles: options.minNumberOfFiles,
+        maxNumberOfFiles: 1,
+        minNumberOfFiles: 1,
         allowedFileTypes: ['video/*'],
       },
       infoTimeout: 10000,
